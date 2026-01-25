@@ -1,0 +1,1 @@
+I will implement a quality mode stream using LL-HLS to maintain consistent quality and a low latency mode using WebRTC

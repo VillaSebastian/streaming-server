@@ -1,0 +1,1 @@
+This is a setup for a videogame live stream server, self hosted on a VPS
