@@ -1,0 +1,36 @@
+services:
+
+  nginx:
+    container_name: nginx
+    image: nginx:1.29
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      DOMAIN: ${DOMAIN}
+    volumes:
+      - ./certbot/www:/var/www/certbot
+      - ./certbot/conf:/etc/letsencrypt
+      - ./nginx/config/:/etc/nginx/templates/:ro
+      - ./nginx/html/:/usr/share/nginx/html/:ro
+    
+  certbot:
+    container_name: certbot
+    image: certbot/certbot
+    environment:
+      DOMAIN: ${DOMAIN}
+      CERTBOT_EMAIL: ${CERTBOT_EMAIL}
+    volumes:
+      - ./certbot/www:/var/www/certbot
+      - ./certbot/conf:/etc/letsencrypt
+    command:
+    - certonly
+    - --webroot
+    - --webroot-path=/var/www/certbot
+    - -d
+    - ${DOMAIN}
+    - --email
+    - ${CERTBOT_EMAIL}
+    - --agree-tos
+    - --no-eff-email
+

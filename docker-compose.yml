@@ -1,11 +1,12 @@
 services:
   nginx:
+    container_name: nginx
     image: nginx:1.29
     ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template:ro
-      - ./nginx/html/:/usr/share/nginx/html:ro
+      - "80:80"
     environment:
-      DOMAIN: localhost
+      DOMAIN: ${DOMAIN}
+    volumes:
+      - ./nginx/config/http.conf.template:/etc/nginx/templates/http.conf.template
+      - ./nginx/html:/usr/share/nginx/html
+      - ./certbot/www:/var/www/certbot
